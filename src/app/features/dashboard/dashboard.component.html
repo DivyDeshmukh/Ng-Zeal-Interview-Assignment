@@ -1,0 +1,30 @@
+<div class="container py-3">
+    <h2 class="mb-3">Dashboard</h2>
+
+    <div class="row g-3">
+      <div class="col-md-4 card h-200">
+        This will contain signedCount
+      </div>
+      <div class="col-md-4 card h-200">
+        This will have signed value
+      </div>
+      <div class="col-md-4 card h-200">
+        This will have contracts that are expiring in 30 days
+      </div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-6">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <div class="card-title h6">By Status</div>
+          <canvas #statusPie></canvas>
+        </div></div>
+      </div>
+      <div class="col-md-6">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <div class="card-title h6">Top Parties (count)</div>
+          <canvas #partyBar></canvas>
+        </div></div>
+      </div>
+    </div>
+  </div>
