@@ -9,6 +9,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './state/reducers';
 import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
+import { ContractsStoreModule } from './features/contracts/contracts-store.module';
 
 @NgModule({
   declarations: [
@@ -22,8 +24,10 @@ import { SharedModule } from './shared/shared.module';
     StoreModule.forRoot(reducers, {
       runtimeChecks: { strictActionImmutability: true, strictStateImmutability: true },
     }),
-    EffectsModule.forRoot([]),   
-    SharedModule                       
+    EffectsModule.forRoot([]), 
+    CoreModule,  
+    SharedModule,
+    ContractsStoreModule                     
   ],
   providers: [],
   bootstrap: [AppComponent]

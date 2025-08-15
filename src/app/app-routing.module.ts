@@ -11,7 +11,12 @@ const routes: Routes = [
   {
     path: 'analytics',
     loadChildren: () => import('./features/analytics/analytics.module').then(m => m.AnalyticsModule)
-  }
+  },
+  {
+    path: 'not-found',
+    loadChildren: () => import('./features/not-found/not-found.module').then(m => m.NotFoundModule)
+  },
+  { path: '**', redirectTo: 'not-found' }
 ];
 
 @NgModule({

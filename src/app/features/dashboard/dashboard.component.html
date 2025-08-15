@@ -1,30 +1,61 @@
 <div class="container py-3">
-    <h2 class="mb-3">Dashboard</h2>
+  <h2 class="mb-3">Dashboard</h2>
 
-    <div class="row g-3">
-      <div class="col-md-4 card h-200">
-        This will contain signedCount
-      </div>
-      <div class="col-md-4 card h-200">
-        This will have signed value
-      </div>
-      <div class="col-md-4 card h-200">
-        This will have contracts that are expiring in 30 days
+  <!-- Loading / Error -->
+  <div *ngIf="loading$ | async" class="alert alert-info py-2 mb-3">Loading summary…</div>
+  <div *ngIf="(error$ | async) as err" class="alert alert-danger py-2 mb-3">Failed to load: {{ err }}</div>
+
+  <!-- KPI cards -->
+  <div class="row g-3">
+    <div class="col-md-4">
+      <app-kpi-card
+        label="Signed Contracts"
+        [value]="(totalSignedCount$ | async) ?? 0"
+        [link]="{ url: ['/contracts'], query: { status: 'signed' } }">
+      </app-kpi-card>
+    </div>
+
+    <div class="col-md-4">
+      <app-kpi-card
+        label="Signed Value"
+        [value]="((totalSignedValue$ | async) ?? 0) | money"
+        [link]="{ url: ['/contracts'], query: { status: 'signed' } }">
+      </app-kpi-card>
+    </div>
+
+    <div class="col-md-4">
+      <app-kpi-card
+        label="Expiring in 30 days"
+        [value]="(expiring30$ | async) ?? 0"
+        [link]="{ url: ['/contracts'], query: { expiringDays: 30 } }">
+      </app-kpi-card>
+    </div>
+  </div>
+
+  <!-- Mini charts -->
+  <div class="row g-3 mt-1">
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <div class="card-title h6">By Status</div>
+          <canvas #statusPie></canvas>
+        </div>
       </div>
     </div>
 
-    <div class="row g-3 mt-1">
-      <div class="col-md-6">
-        <div class="card h-100 shadow-sm"><div class="card-body">
-          <div class="card-title h6">By Status</div>
-          <canvas #statusPie></canvas>
-        </div></div>
-      </div>
-      <div class="col-md-6">
-        <div class="card h-100 shadow-sm"><div class="card-body">
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
           <div class="card-title h6">Top Parties (count)</div>
           <canvas #partyBar></canvas>
-        </div></div>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Quick links -->
+  <div class="mt-3">
+    <a class="btn btn-outline-primary btn-sm me-2" [routerLink]="['/contracts']" [queryParams]="{ status: 'signed' }">View Signed</a>
+    <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/contracts']" [queryParams]="{ expiringDays: 30 }">Expiring ≤ 30d</a>
+  </div>
+</div>

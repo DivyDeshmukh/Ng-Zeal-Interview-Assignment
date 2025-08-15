@@ -1,10 +1,55 @@
-<div>
-    <h2 class="mb-3">Contracts Details</h2>
-    
-    <div class="row g-3">
-        <div class="col-md-12">
-        <!-- Placeholder for contracts list table -->
-        <p>Contracts Detail will be shown here.</p>
+<div class="container py-3" *ngIf="contract$ | async as c; else loading">
+  <button class="btn btn-link p-0 mb-2" (click)="backToList()">&larr; Back</button>
+
+  <div class="d-flex align-items-center gap-3">
+    <h3 class="mb-0">{{ c.title }}</h3>
+    <span class="badge bg-secondary"
+          [ngClass]="{
+            'bg-info': c.status==='sent',
+            'bg-success': c.status==='signed',
+            'bg-warning text-dark': c.status==='expired',
+            'bg-danger': c.status==='terminated'
+          }">
+      {{ c.status }}
+    </span>
+
+    <!-- Expiring / Expired badges -->
+    <ng-container *ngIf="isExpired(c); else expSoon">
+      <span class="badge bg-warning text-dark">Expired</span>
+    </ng-container>
+    <ng-template #expSoon>
+      <span *ngIf="daysToExpiry(c) as d" class="badge bg-warning text-dark">Expiring in {{ d }} days</span>
+    </ng-template>
+  </div>
+
+  <div class="row g-3 mt-2">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="row g-2">
+            <div class="col-md-6"><strong>Party:</strong> {{ c.party }}</div>
+            <div class="col-md-6"><strong>Amount:</strong> {{ c.amount | money:(c.currency || 'INR') }}</div>
+            <div class="col-md-6"><strong>Start date:</strong> {{ c.startDate | date }}</div>
+            <div class="col-md-6"><strong>End date:</strong> {{ c.endDate | date }}</div>
+          </div>
         </div>
+      </div>
     </div>
+
+    <!-- Quick facts -->
+    <div class="col-lg-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="small text-muted mb-1">Contract ID</div>
+          <div class="text-monospace">{{ c.id }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<ng-template #loading>
+  <div class="container py-3">
+    <div class="alert alert-info">Loading contract…</div>
+  </div>
+</ng-template>

@@ -1,4 +1,51 @@
 <div class="container mt-4">
-  <h2>Analytics</h2>
-  <p>Analytics content will go here.</p>
+  <div class="d-flex align-items-center justify-content-between mb-2">
+    <h2 class="mb-0">Analytics</h2>
+
+    <div class="d-flex gap-2 align-items-end">
+      <div>
+        <label class="form-label mb-1">Year</label>
+        <select class="form-select" [value]="year" (change)="onYearChange($event)">
+          <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="form-label mb-1">Month</label>
+        <select class="form-select" [value]="month ?? ''" (change)="onMonthChange($event)">
+          <option value="">All</option>
+          <option *ngFor="let m of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="m">{{ m }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <div class="card-title h6">Status (filtered)</div>
+          <canvas #pie></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <div class="card-title h6">Top Parties by Value</div>
+          <canvas #bar></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <div class="card-title h6">Value by Month ({{ year }})</div>
+          <canvas #line></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
