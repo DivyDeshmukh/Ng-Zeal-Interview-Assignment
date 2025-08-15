@@ -1,0 +1,8 @@
+<div class="card shadow-sm h-100">
+    <div class="card-body">
+      <div class="text-secondary small">{{ label }}</div>
+      <div class="h4 my-1">{{ value }}</div>
+      <div class="text-muted small" *ngIf="hint">{{ hint }}</div>
+      <a *ngIf="link" class="stretched-link" [routerLink]="link.url" [queryParams]="link.query"></a>
+    </div>
+  </div>

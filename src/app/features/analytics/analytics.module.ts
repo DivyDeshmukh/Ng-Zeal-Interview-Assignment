@@ -9,7 +9,10 @@ import { AnalyticsRoutingModule } from './analytics-routing.module';
   ],
   imports: [
     CommonModule,
-    AnalyticsRoutingModule
+    AnalyticsRoutingModule,
+  ],
+  exports: [
+    AnalyticsComponent,
   ]
 })
 export class AnalyticsModule { }
